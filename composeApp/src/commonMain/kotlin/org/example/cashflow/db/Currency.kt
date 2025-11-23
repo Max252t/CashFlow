@@ -1,4 +1,4 @@
-package org.example.cashflow.ui.waste
+package org.example.cashflow.db
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AttachMoney

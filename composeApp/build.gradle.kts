@@ -54,6 +54,8 @@ kotlin {
             implementation(libs.decompose)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.decompose.extensions.compose)
+            implementation(libs.ktor.server.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
             /*implementation(libs.coil3.coil)
             implementation(libs.coil.compose)
             implementation(libs.coil.network)*/
