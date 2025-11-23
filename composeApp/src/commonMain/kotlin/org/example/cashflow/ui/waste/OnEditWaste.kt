@@ -36,6 +36,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cashflow.composeapp.generated.resources.Res
 import cashflow.composeapp.generated.resources.label_money
+import org.example.cashflow.db.Currency
 import org.example.cashflow.db.WasteCategories
 import org.example.cashflow.db.WasteItemDB
 import org.example.cashflow.ui.ColorsUI
@@ -95,9 +96,9 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
 @Preview(showBackground = true)
 @Composable
 fun EditItem(onCreateItem: (
-        cost: Float,
-        currency: Currency,
-        wasteCategories: WasteCategories
+    cost: Float,
+    currency: Currency,
+    wasteCategories: WasteCategories
         ) -> Unit) {
 
     val wasteCategories = WasteCategories.entries.toTypedArray()

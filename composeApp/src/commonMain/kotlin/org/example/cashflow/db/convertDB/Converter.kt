@@ -5,7 +5,7 @@ import org.example.cashflow.db.WasteCategories
 import org.example.cashflow.db.Waste
 import org.example.cashflow.db.WasteCard
 import org.example.cashflow.db.WasteItemDB
-import org.example.cashflow.ui.waste.Currency
+import org.example.cashflow.db.Currency
 
 class Converter(private val waste: Waste) {
     private val wasteCategories = WasteCategories.entries.toTypedArray().associateBy { it.name}

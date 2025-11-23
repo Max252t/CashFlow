@@ -20,7 +20,7 @@ class CurrencyApi {
     fun getData(){
         CoroutineScope(Dispatchers.IO).launch {
             val data = httpClient.get(url).body<String>()
-            Logger.i(data, tag = "Ktor")
+            Logger.i(data.toString(), tag = "Ktor")
             httpClient.close()
 
         }
