@@ -15,11 +15,12 @@ class ConverterTest {
         )
     private val wasteCurrency = Currency.entries.toTypedArray().associateBy { it.name}
 
+    private val wasteCategories = WasteCategories.entries.toTypedArray().associateBy { it.name}
 
 
     @Test
     fun getListWaste(){
-       /* assertEquals(expected = listOf<WasteCategories?>(WasteCategories.Shop,
+       assertEquals(expected = listOf(WasteCategories.Shop,
             WasteCategories.Personal,
             WasteCategories.Other,
             WasteCategories.Travel
@@ -27,8 +28,7 @@ class ConverterTest {
             actual = waste
                 .listWasteCategories
                 .split("#")
-                .map { wasteCategories[it] })*/
-        assertEquals(expected = 5, actual = 2+3)
+                .map { wasteCategories[it] })
 
     }
     @Test
@@ -52,5 +52,19 @@ class ConverterTest {
                 .map { it.toFloat() })
     }
 
+
+
+
+    @Test
+    fun convertCost(){
+        val listCost  = listOf(35.6, 73.8, 23.0)
+        var convertedList = listCost.first().toString()
+        if (listCost.size>1) {
+            listCost.subList(1, listCost.size).forEach {
+                convertedList += "#$it"
+            }
+        }
+        assertEquals(expected = "35.6#73.8#23.0", actual = convertedList)
+    }
 
 }
