@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import org.example.cashflow.db.Waste
 import org.example.cashflow.db.WasteCard
 import org.example.cashflow.db.WasteDatabase
+import org.example.cashflow.db.WasteItemDB
 import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.viewmodels.interfaces.HomeComponent
 import org.jetbrains.compose.resources.StringResource
@@ -20,8 +21,7 @@ class HomeScreenComponent(
     componentContext: ComponentContext,
     val wasteDatabase: WasteDatabase
 ): ComponentContext by componentContext, HomeComponent {
-    private val _stateFlowWaste = MutableStateFlow<List<Waste>>(emptyList())
-    val itemsState: StateFlow<List<Waste>> = _stateFlowWaste.asStateFlow()
+
 
     override fun createWaste(wasteCard: WasteCard) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -65,6 +65,15 @@ class HomeScreenComponent(
         }
         return emptyList()
     }
-
+    companion object{
+        private val _stateFlowWasteCard = MutableStateFlow(WasteCard(emptyList(), ""))
+        val itemsState: StateFlow<WasteCard> = _stateFlowWasteCard.asStateFlow()
+        fun updateWasteCard(wasteList: List<WasteItemDB>){
+            _stateFlowWasteCard.value = WasteCard(
+                listWaste = wasteList,
+                date = ""
+            )
+        }
+    }
 
 }

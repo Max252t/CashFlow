@@ -39,6 +39,7 @@ fun HomeScreen(
     val wasteCards = Converter
         .convertWaste(wastes)
     val wasteCategories = WasteCategories.entries.toTypedArray()
+
     Box(modifier = modifier){
 
         Column {
