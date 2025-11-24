@@ -50,7 +50,7 @@ fun BottomNavBar(
                           isSelected = rootComponent.childStack.active.configuration
                           },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = ColorsUI.cian,
+                    indicatorColor = ColorsUI.purple_light,
                     selectedIconColor = Color.White,
                     selectedTextColor = Color.White,
                     unselectedIconColor = Color.Gray,

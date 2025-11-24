@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 object ColorsUI {
     val light_blue = Color((0xFF42CAFD))
-    val cian = Color(0xFF68C7C9)
+    val purple_light = Color(0xFFA190F6)
     val light_yellow = Color(0xFFF5EFA6)
     val dark_green = Color(0xFF8EB09D)
     val light_pink = Color(0xFFF0D1D0)
@@ -12,6 +12,6 @@ object ColorsUI {
     val light_green = Color(0xFF8ED2BD)
     val light_cian = Color(0xFFA4F3DA)
 
-    val backgroundColor = Color(0xFFB1DDCE)
+    val backgroundColor = Color(0xFFBCC9FD)
 
 }

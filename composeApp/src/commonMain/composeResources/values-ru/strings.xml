@@ -3,7 +3,7 @@
     <string name="person_bar">Аккаунт</string>
     <string name="enter_position">Введите позицию</string>
     <string name="enter_amount">Введите сумму</string>
-
+    <string name="expenses">Расходы за день</string>
     <string name="housing">Жилье</string>
     <string name="transportation">Транспорт</string>
     <string name="food">Еда и кафе</string>
