@@ -1,6 +1,7 @@
 package org.example.cashflow.db.convertDB
 
 import androidx.room.TypeConverter
+import co.touchlab.kermit.Logger
 import org.example.cashflow.db.WasteCategories
 import org.example.cashflow.db.Waste
 import org.example.cashflow.db.WasteCard
