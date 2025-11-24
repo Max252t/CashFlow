@@ -39,6 +39,7 @@ import cashflow.composeapp.generated.resources.label_money
 import org.example.cashflow.db.WasteCategories
 import org.example.cashflow.db.WasteItemDB
 import org.example.cashflow.ui.ColorsUI
+import org.example.cashflow.viewmodels.HomeScreenComponent
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -60,6 +61,7 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
                    cost,
                    currency)
                returnList(wasteList)
+               HomeScreenComponent.updateWasteCard(wasteList)
            }
        }
         item {
@@ -69,6 +71,7 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
             ){
                 IconButton(
                     onClick = {
+                        HomeScreenComponent.updateWasteCard(wasteList)
                         returnList(wasteList)
                         wasteList.add(WasteItemDB(
                             WasteCategories.Other,

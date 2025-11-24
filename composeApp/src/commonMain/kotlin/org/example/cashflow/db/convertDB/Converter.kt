@@ -1,7 +1,6 @@
 package org.example.cashflow.db.convertDB
 
 import androidx.room.TypeConverter
-import co.touchlab.kermit.Logger
 import org.example.cashflow.db.WasteCategories
 import org.example.cashflow.db.Waste
 import org.example.cashflow.db.WasteCard
@@ -33,7 +32,7 @@ class Converter(private val waste: Waste) {
         fun convertWaste(listWaste: List<WasteCategories>): String{
             var convertedList = listWaste.first().name
             if (listWaste.size>1) {
-                listWaste.subList(1, listWaste.size - 1).forEach {
+                listWaste.subList(1, listWaste.size).forEach {
                     convertedList += "#" + it.name
                 }
             }
@@ -43,7 +42,7 @@ class Converter(private val waste: Waste) {
         fun convertCurrency(listCurrency: List<Currency>): String{
             var convertedList = listCurrency.first().name
             if (listCurrency.size>1) {
-                listCurrency.subList(1, listCurrency.size - 1).forEach {
+                listCurrency.subList(1, listCurrency.size).forEach {
                     convertedList += "#" + it.name
                 }
             }
@@ -53,7 +52,7 @@ class Converter(private val waste: Waste) {
         fun convertCost(listCost: List<Float>): String{
             var convertedList = listCost.first().toString()
             if (listCost.size>1) {
-                listCost.subList(1, listCost.size - 1).forEach {
+                listCost.subList(1, listCost.size).forEach {
                     convertedList += "#$it"
                 }
             }
