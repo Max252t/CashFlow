@@ -14,6 +14,7 @@
     <string name="travel">Travel</string>
     <string name="personal">Personal</string>
     <string name="other">Other</string>
+    <string name="last_waste">LAST WASTE</string>
 
     <string name="label_money">Enter the amount</string>
 

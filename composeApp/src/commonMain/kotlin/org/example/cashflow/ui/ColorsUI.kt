@@ -13,5 +13,24 @@ object ColorsUI {
     val light_cian = Color(0xFFA4F3DA)
 
     val backgroundColor = Color(0xFFBCC9FD)
+    val cardColor = Color(0xFFF8F8F8)
+    val categoryColors = arrayOf(
+        Color(0xFF9963FA),
+        Color(0xFF54C4EF),
+        Color(0xFF4A49D5),
+        Color(0xFFE68ACC),
+        Color(0xFF4C3B77),
+        Color(0xFF9963FA),
+        Color(0xFF54C4EF),
+        Color(0xFF4A49D5),
+        Color(0xFFE68ACC),
+        Color(0xFF4C3B77),
+        Color(0xFF6BDB9E),
+        Color(0xFFFFB74D),
+        Color(0xFFFF6B6B),
+        Color(0xFF9575CD),
+        Color(0xFF4DB6AC),
+        Color(0xFFFFD54F)
+        )
 
 }
