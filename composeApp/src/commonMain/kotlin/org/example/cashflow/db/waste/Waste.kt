@@ -1,4 +1,4 @@
-package org.example.cashflow.db
+package org.example.cashflow.db.waste
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

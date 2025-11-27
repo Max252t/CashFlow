@@ -3,6 +3,10 @@ package org.example.cashflow.network
 import android.annotation.SuppressLint
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.http.ContentType.Application.Json
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import javax.net.ssl.HostnameVerifier
@@ -39,5 +43,17 @@ actual fun createUnsafeHttpClient(): HttpClient {
                 }
             }
         }
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+                isLenient = true
+                prettyPrint = true
+                explicitNulls = false
+                coerceInputValues = true
+            })
+        }
+
+
+
     }
 }

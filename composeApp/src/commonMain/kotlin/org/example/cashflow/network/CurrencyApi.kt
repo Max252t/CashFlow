@@ -1,14 +1,12 @@
 package org.example.cashflow.network
 
-import co.touchlab.kermit.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
+import org.example.cashflow.db.currency.CbrDailyResponse
 
 class CurrencyApi {
     private var httpClient: HttpClient
@@ -17,24 +15,24 @@ class CurrencyApi {
         this.url = url
         httpClient = createUnsafeHttpClient()
     }
-    fun getData(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val data = httpClient.get(url).body<String>()
-            Logger.i(data, tag = "Ktor")
+    fun getData(): CbrDailyResponse?{
+        var data: CbrDailyResponse? = null
+        runBlocking {
+            val ktor = async {
+                val jsonData: String = httpClient.get(url).body()
+                Json.decodeFromString<CbrDailyResponse>(
+                    jsonData
+                )
+            }
+            data = ktor.await()
             httpClient.close()
-
         }
+        return data
     }
 
 }
 expect fun createUnsafeHttpClient(): HttpClient
 
-@Serializable
-data class CurrencyClient(
-    val rates: Rates
-)
 
-@Serializable
-data class Rates(
-    val usd: String
-)
+
+

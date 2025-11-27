@@ -2,8 +2,8 @@ package org.example.cashflow.ui.waste
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import org.example.cashflow.db.WasteCard
-import org.example.cashflow.db.WasteItemDB
+import org.example.cashflow.db.waste.WasteCard
+import org.example.cashflow.db.waste.WasteItemDB
 
 @Composable
 fun WasteCard(wasteCard: WasteCard){

@@ -1,11 +1,11 @@
 package org.example.cashflow.db.convertDB
 
 import androidx.room.TypeConverter
-import org.example.cashflow.db.WasteCategories
-import org.example.cashflow.db.Waste
-import org.example.cashflow.db.WasteCard
-import org.example.cashflow.db.WasteItemDB
-import org.example.cashflow.ui.waste.Currency
+import org.example.cashflow.db.waste.WasteCategories
+import org.example.cashflow.db.waste.Waste
+import org.example.cashflow.db.waste.WasteCard
+import org.example.cashflow.db.waste.WasteItemDB
+import org.example.cashflow.db.currency.Currency
 
 class Converter(private val waste: Waste) {
     private val wasteCategories = WasteCategories.entries.toTypedArray().associateBy { it.name}

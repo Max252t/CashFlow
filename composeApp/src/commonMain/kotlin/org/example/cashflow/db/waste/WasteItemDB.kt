@@ -1,6 +1,6 @@
-package org.example.cashflow.db
+package org.example.cashflow.db.waste
 
-import org.example.cashflow.ui.waste.Currency
+import org.example.cashflow.db.currency.Currency
 
 
 data class WasteItemDB(

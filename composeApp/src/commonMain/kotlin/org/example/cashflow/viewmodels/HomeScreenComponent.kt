@@ -9,11 +9,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.example.cashflow.db.Waste
-import org.example.cashflow.db.WasteCard
-import org.example.cashflow.db.WasteDatabase
-import org.example.cashflow.db.WasteItemDB
+import org.example.cashflow.db.waste.Waste
+import org.example.cashflow.db.waste.WasteCard
+import org.example.cashflow.db.waste.WasteDatabase
+import org.example.cashflow.db.waste.WasteItemDB
 import org.example.cashflow.db.convertDB.Converter
+import org.example.cashflow.db.currency.CbrDailyResponse
+import org.example.cashflow.network.CurrencyApi
 import org.example.cashflow.viewmodels.interfaces.HomeComponent
 import org.jetbrains.compose.resources.StringResource
 
@@ -22,7 +24,8 @@ class HomeScreenComponent(
     val wasteDatabase: WasteDatabase
 ): ComponentContext by componentContext, HomeComponent {
 
-
+    private val _stateFlowCurrency = MutableStateFlow(CbrDailyResponse())
+    val currencyState = _stateFlowCurrency.asStateFlow()
     override fun createWaste(wasteCard: WasteCard) {
         CoroutineScope(Dispatchers.IO).launch {
             wasteDatabase.wasteDao().upsert(
@@ -65,6 +68,13 @@ class HomeScreenComponent(
         }
         return emptyList()
     }
+
+    override fun updateCurrency() {
+        val currencyApi = CurrencyApi("https://www.cbr-xml-daily.ru/daily_json.js")
+       _stateFlowCurrency.value = currencyApi.getData()?: CbrDailyResponse()
+
+    }
+
     companion object{
         private val _stateFlowWasteCard = MutableStateFlow(WasteCard(emptyList(), ""))
         val itemsState: StateFlow<WasteCard> = _stateFlowWasteCard.asStateFlow()

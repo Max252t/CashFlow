@@ -5,7 +5,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import kotlinx.serialization.Serializable
-import org.example.cashflow.db.WasteDatabase
+import org.example.cashflow.db.waste.WasteDatabase
 import org.example.cashflow.navigation.interfaces.RootComponentPattern
 import org.example.cashflow.viewmodels.AccountScreenComponent
 import org.example.cashflow.viewmodels.HomeScreenComponent

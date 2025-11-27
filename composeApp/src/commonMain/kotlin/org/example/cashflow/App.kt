@@ -35,11 +35,10 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import org.example.cashflow.db.WasteDao
+import org.example.cashflow.db.waste.WasteDao
 import org.example.cashflow.navigation.BottomNavBar
 import org.example.cashflow.navigation.BottomNavItem
 import org.example.cashflow.navigation.RootComponent
-import org.example.cashflow.network.CurrencyApi
 import org.example.cashflow.ui.AccountScreen
 import org.example.cashflow.ui.ColorsUI
 import org.example.cashflow.ui.HomeScreen
@@ -51,8 +50,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App(rootComponent: RootComponent,
         wasteDao: WasteDao) {
-    val currencyApi = CurrencyApi("https://www.cbr-xml-daily.ru/latest.js")
-    currencyApi.getData()
     MaterialTheme {
         val childStack by rootComponent.childStack.subscribeAsState()
         val isCreating = remember { mutableStateOf(false) }

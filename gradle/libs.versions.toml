@@ -22,11 +22,15 @@ koinComposeMultiplatform = "4.1.1"
 kotlinxDatetime = "0.7.1.0"
 kotlinxDatetimeVersion = "0.7.1"
 kotlinxSerializationJson = "1.9.0"
-ktorClient = "3.3.2"
+ktorClient = "3.3.3"
+ktorClientContentNegotiation = "3.3.3"
+ktorClientGson = "3.3.3"
+ktorClientJsonJvm = "3.3.3"
+ktorSerializationKotlinxJson = "3.3.2"
 lifecycleViewModel = "2.9.4"
 kspVersion = "2.2.20-2.0.4"
-room = "2.8.3"
-sqlite = "2.6.1"
+room = "2.8.4"
+sqlite = "2.6.2"
 
 [libraries]
 
@@ -58,8 +62,12 @@ androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle
 kotlinx-datetime-v071 = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetimeVersion" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClient" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClientContentNegotiation" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClient" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktorClient" }
+ktor-client-gson = { module = "io.ktor:ktor-client-gson", version.ref = "ktorClientGson" }
+ktor-client-json-jvm = { module = "io.ktor:ktor-client-json-jvm", version.ref = "ktorClientJsonJvm" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel"}
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }

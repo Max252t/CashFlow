@@ -21,7 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.example.cashflow.db.WasteCategories
+import org.example.cashflow.db.waste.WasteCategories
 import org.jetbrains.compose.resources.stringResource
 
 @Stable

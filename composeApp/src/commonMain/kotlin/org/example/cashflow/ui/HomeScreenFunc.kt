@@ -26,17 +26,13 @@ import cashflow.composeapp.generated.resources.Res
 import cashflow.composeapp.generated.resources.categories
 import cashflow.composeapp.generated.resources.expenses
 import cashflow.composeapp.generated.resources.last_waste
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
-import org.example.cashflow.db.WasteCategories
+import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.ui.waste.CategoryCard
 import org.example.cashflow.ui.waste.CreateWaste
 import org.example.cashflow.ui.waste.WasteCard
 import org.example.cashflow.viewmodels.HomeScreenComponent
 import org.jetbrains.compose.resources.stringResource
-import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 
@@ -47,11 +43,11 @@ fun HomeScreen(
     modifier: Modifier = Modifier.fillMaxWidth(),
     isCreating: MutableState<Boolean>
 ){
-
     val wastes by component.getWastes().collectAsState(initial = emptyList())
     val wasteCards = Converter
         .convertWaste(wastes)
     val wasteCategories = WasteCategories.entries.toTypedArray()
+    component.updateCurrency()
     Box(modifier = modifier){
         Column {
             Text(stringResource(Res.string.expenses),

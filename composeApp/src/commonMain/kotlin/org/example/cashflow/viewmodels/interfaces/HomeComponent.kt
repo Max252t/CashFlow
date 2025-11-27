@@ -1,8 +1,8 @@
 package org.example.cashflow.viewmodels.interfaces
 
 import kotlinx.coroutines.flow.Flow
-import org.example.cashflow.db.Waste
-import org.example.cashflow.db.WasteCard
+import org.example.cashflow.db.waste.Waste
+import org.example.cashflow.db.waste.WasteCard
 import org.jetbrains.compose.resources.StringResource
 
 interface HomeComponent {
@@ -12,5 +12,6 @@ interface HomeComponent {
     fun deleteWaste(waste: Waste)
     fun convertData(listWaste: List<Waste>)
     fun statisticsWaste(listWasteCard: List<WasteCard>): List<Pair<StringResource, Float>>
+    fun updateCurrency()
 
 }
