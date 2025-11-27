@@ -16,4 +16,6 @@
     <string name="other">Прочее</string>
     <string name="last_waste">Последние траты</string>
     <string name="label_money">Введите сумму</string>
+    <string name="categories">Категории</string>
+
 </resources>

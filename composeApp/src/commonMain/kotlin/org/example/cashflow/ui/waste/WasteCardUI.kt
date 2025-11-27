@@ -7,7 +7,6 @@ import org.example.cashflow.db.WasteItemDB
 
 @Composable
 fun WasteCard(wasteCard: WasteCard){
-
         Column {
             wasteCard.listWaste.forEach { value ->
                 WasteItem(

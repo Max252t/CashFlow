@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cashflow.composeapp.generated.resources.Res
+import cashflow.composeapp.generated.resources.categories
 import cashflow.composeapp.generated.resources.expenses
 import cashflow.composeapp.generated.resources.last_waste
 import kotlinx.datetime.LocalDate
@@ -51,14 +52,6 @@ fun HomeScreen(
     val wasteCards = Converter
         .convertWaste(wastes)
     val wasteCategories = WasteCategories.entries.toTypedArray()
-    val date = Clock.System.todayIn(TimeZone.currentSystemDefault())
-    val dateFormat = LocalDate.Format {
-        day()
-        chars(".")
-        monthNumber()
-        chars(".")
-        year()
-    }
     Box(modifier = modifier){
         Column {
             Text(stringResource(Res.string.expenses),
@@ -70,7 +63,7 @@ fun HomeScreen(
                 fontSize = 28.sp,
                 modifier = Modifier.padding(start = 14.dp),
                 fontWeight = FontWeight.Bold)
-            Text("Categories",
+            Text(stringResource(Res.string.categories),
                 fontSize = 21.sp,
                 modifier = Modifier.padding(start = 14.dp))
             LazyRow {
