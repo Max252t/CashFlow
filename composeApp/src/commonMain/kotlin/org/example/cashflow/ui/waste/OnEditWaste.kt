@@ -39,6 +39,7 @@ import cashflow.composeapp.generated.resources.label_money
 import org.example.cashflow.db.WasteCategories
 import org.example.cashflow.db.WasteItemDB
 import org.example.cashflow.ui.ColorsUI
+import org.example.cashflow.viewmodels.HomeScreenComponent
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -60,6 +61,7 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
                    cost,
                    currency)
                returnList(wasteList)
+               HomeScreenComponent.updateWasteCard(wasteList)
            }
        }
         item {
@@ -69,6 +71,7 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
             ){
                 IconButton(
                     onClick = {
+                        HomeScreenComponent.updateWasteCard(wasteList)
                         returnList(wasteList)
                         wasteList.add(WasteItemDB(
                             WasteCategories.Other,
@@ -110,7 +113,10 @@ fun EditItem(onCreateItem: (
     else mutableStateOf(Currency.Dollar) }
     var wasteInput by remember { mutableStateOf("") }
     var isCurrencyCheck by remember { mutableStateOf(false) }
-
+    onCreateItem(if (wasteInput!="")wasteInput.toFloat() else 0f,
+        selectCurrency,
+        selectWaste
+    )
     LaunchedEffect(isMenuCheck) {
         rotation.animateTo(
             targetValue = if (isMenuCheck) 180f else 1f
@@ -129,10 +135,7 @@ fun EditItem(onCreateItem: (
                 onClick = {
                     isMenuCheck = false
                     selectWaste = it
-                    onCreateItem(if (wasteInput!="")wasteInput.toFloat() else 0f,
-                        selectCurrency,
-                        selectWaste
-                    )
+
                 },
                 leadingIcon = {
                     Icon(
@@ -181,10 +184,6 @@ fun EditItem(onCreateItem: (
                 onValueChange = {
                     if (wasteInput.length <= 8 || it.length < 10) {
                         wasteInput = it
-                        onCreateItem(if (wasteInput!="")wasteInput.toFloat() else 0f,
-                            selectCurrency,
-                            selectWaste
-                        )
                     } },
                trailingIcon = {
                    IconButton(onClick = {
@@ -213,10 +212,6 @@ fun EditItem(onCreateItem: (
                 onClick = {
                     isCurrencyCheck = false
                     selectCurrency = it
-                    onCreateItem(if (wasteInput!="")wasteInput.toFloat() else 0f,
-                        selectCurrency,
-                        selectWaste
-                        )
                 },
                 leadingIcon = {
                     Icon(

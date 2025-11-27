@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.example.cashflow.db.WasteItemDB
@@ -28,7 +30,10 @@ import kotlin.math.round
 
 @Preview(showBackground = true)
 @Composable
-fun WasteItem(wasteItem: WasteItemDB){
+fun WasteItem(
+    wasteItem: WasteItemDB,
+    date: String
+              ){
     Column{
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -39,23 +44,30 @@ fun WasteItem(wasteItem: WasteItemDB){
                 .name
                 .lowercase(),
             Modifier
-                .size(32.dp)
-                .clip(CircleShape)
-                .background(Color.LightGray),
+                .size(48.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(Color(0xFF0B0822)),
+            tint = Color.White,
         )
         Spacer(Modifier.width(10.dp))
-        Text(
-            text = stringResource(wasteItem.wasteCategory.title),
-            fontSize = 19.sp
-        )
+        Column {
+            Text(
+                text = stringResource(wasteItem.wasteCategory.title),
+                fontSize = 19.sp
+            )
+            Text(
+                text = date,
+                fontSize = 13.sp,
+                color = Color.Gray
+            )
+
+        }
         Box(
             modifier = Modifier
                 .weight(1f),
             contentAlignment = Alignment.CenterEnd
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(wasteItem.currency.icon,
-                    contentDescription = "currency")
                 Text(
                     text = "${
                         wasteItem
@@ -67,6 +79,8 @@ fun WasteItem(wasteItem: WasteItemDB){
                     modifier = Modifier
                         .padding(3.dp)
                 )
+                Icon(wasteItem.currency.icon,
+                    contentDescription = "currency")
             }
         }
     }
