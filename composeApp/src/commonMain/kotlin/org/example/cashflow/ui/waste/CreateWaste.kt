@@ -19,6 +19,7 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -118,6 +119,7 @@ fun CreateWaste(
 
 
 
+@Stable
 @Composable
 fun SingleChoiceButton(
     modifier: Modifier = Modifier.fillMaxWidth(),

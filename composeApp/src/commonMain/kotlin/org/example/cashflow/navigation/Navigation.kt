@@ -38,7 +38,7 @@ fun BottomNavBar(
     NavigationBar(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp)),
-        containerColor = Color(0xFFE0F1EB),
+        containerColor = Color(0xFFFDFDFD),
         tonalElevation = 5.dp
     ) {
         var isSelected by remember { mutableStateOf(rootComponent.childStack.active.configuration) }
@@ -50,7 +50,7 @@ fun BottomNavBar(
                           isSelected = rootComponent.childStack.active.configuration
                           },
                 colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = ColorsUI.cian,
+                    indicatorColor = ColorsUI.purple_light,
                     selectedIconColor = Color.White,
                     selectedTextColor = Color.White,
                     unselectedIconColor = Color.Gray,

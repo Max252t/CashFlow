@@ -98,7 +98,7 @@ fun App(rootComponent: RootComponent,
                             isCreating.value = true
                         },
                         shape = CircleShape,
-                        containerColor = ColorsUI.cian,
+                        containerColor = ColorsUI.purple_light,
                     ) {
                         Icon(
                             imageVector = vectorResource(Res.drawable.addi),

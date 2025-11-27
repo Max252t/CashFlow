@@ -3,7 +3,7 @@
     <string name="person_bar">Person</string>
     <string name="enter_position">Enter the position</string>
     <string name="enter_amount">Enter the amount</string>
-
+    <string name="expenses">Expenses per day</string>
     <string name="housing">Housing</string>
     <string name="transportation">Transportation</string>
     <string name="food">Food</string>
@@ -14,7 +14,8 @@
     <string name="travel">Travel</string>
     <string name="personal">Personal</string>
     <string name="other">Other</string>
-
+    <string name="last_waste">LAST WASTE</string>
+    <string name="categories">Categories</string>
     <string name="label_money">Enter the amount</string>
 
 </resources>
