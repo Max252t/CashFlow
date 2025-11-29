@@ -14,8 +14,8 @@
     <string name="travel">Путешествия</string>
     <string name="personal">Личные траты</string>
     <string name="other">Прочее</string>
-    <string name="last_waste">Последние траты</string>
+    <string name="last_waste">История</string>
     <string name="label_money">Введите сумму</string>
     <string name="categories">Категории</string>
-
+    <string name="see_all">Увидеть все</string>
 </resources>

@@ -1,6 +1,5 @@
 package org.example.cashflow.viewmodels
 
-import co.touchlab.kermit.Logger
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +26,7 @@ class HomeScreenComponent(
     init {
         getWastes()
         updateCurrency()
+
     }
     private val _stateFlowCurrency = MutableStateFlow(CbrDailyResponse())
     val currencyState = _stateFlowCurrency.asStateFlow()
@@ -35,7 +35,6 @@ class HomeScreenComponent(
     val wasteState = _stateFlowWaste.asStateFlow()
 
     private val _sumFlowState = MutableStateFlow(0)
-    val sumState = _sumFlowState.asStateFlow()
 
 
 
@@ -108,7 +107,6 @@ class HomeScreenComponent(
 
     companion object{
         private val _stateFlowWasteCard = MutableStateFlow(WasteCard(emptyList(), ""))
-        val itemsState: StateFlow<WasteCard> = _stateFlowWasteCard.asStateFlow()
         fun updateWasteCard(wasteList: List<WasteItemDB>){
             _stateFlowWasteCard.value = WasteCard(
                 listWaste = wasteList,

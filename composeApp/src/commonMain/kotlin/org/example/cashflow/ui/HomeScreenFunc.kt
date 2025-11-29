@@ -1,7 +1,9 @@
 package org.example.cashflow.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,8 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -26,6 +33,7 @@ import cashflow.composeapp.generated.resources.Res
 import cashflow.composeapp.generated.resources.categories
 import cashflow.composeapp.generated.resources.expenses
 import cashflow.composeapp.generated.resources.last_waste
+import cashflow.composeapp.generated.resources.see_all
 import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.ui.waste.CategoryCard
@@ -90,12 +98,24 @@ fun HomeScreen(
 
                     LazyColumn(modifier = Modifier.fillMaxHeight(0.5f)) {
                         item {
-                            Text(
-                                stringResource(Res.string.last_waste),
-                                color = Color.DarkGray,
-                                fontSize = 20.sp,
-                                modifier = Modifier.padding(6.dp)
-                            )
+                            Row {
+                                Text(
+                                    stringResource(Res.string.last_waste),
+                                    color = Color.DarkGray,
+                                    fontSize = 20.sp,
+                                    modifier = Modifier.padding(6.dp)
+                                )
+                                Box(contentAlignment = Alignment.CenterEnd,
+                                    modifier = Modifier.weight(1f)
+                                    ){
+                                    IconButton(onClick = {}) {
+                                        Icon(
+                                            Icons.AutoMirrored.Filled.ArrowForward,
+                                            contentDescription = "seeAll"
+                                        )
+                                    }
+                                }
+                            }
                         }
                         itemsIndexed(
                             wasteCards.subList(

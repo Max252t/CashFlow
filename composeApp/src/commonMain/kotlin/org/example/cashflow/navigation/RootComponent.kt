@@ -5,7 +5,9 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import kotlinx.serialization.Serializable
+
 import org.example.cashflow.db.waste.WasteDatabase
+import org.example.cashflow.navigation.RootComponent.Child.*
 import org.example.cashflow.navigation.interfaces.RootComponentPattern
 import org.example.cashflow.viewmodels.AccountScreenComponent
 import org.example.cashflow.viewmodels.HomeScreenComponent
@@ -28,15 +30,19 @@ class RootComponent(
         context: ComponentContext
     ): Child {
         return when(config){
-            is Config.AccountScreen -> Child.AccountScreen(
+            is Config.AccountScreen -> AccountScreen(
                 AccountScreenComponent(context)
             )
-            Config.HomeScreen -> Child.HomeScreen(
+            Config.HomeScreen -> HomeScreen(
                 HomeScreenComponent(
                     context,
                     wasteDatabase
                 )
             )
+
+            Config.WasteScreen -> {
+                TODO()
+            }
         }
     }
    override fun navigateTo(route: Config){
@@ -52,6 +58,7 @@ class RootComponent(
     sealed class Child{
         data class HomeScreen(val component: HomeScreenComponent): Child()
         data class AccountScreen(val component: AccountScreenComponent): Child()
+
     }
 
     @Serializable
@@ -61,5 +68,7 @@ class RootComponent(
 
         @Serializable
         data object AccountScreen: Config()
+        @Serializable
+        data object WasteScreen: Config()
     }
 }
