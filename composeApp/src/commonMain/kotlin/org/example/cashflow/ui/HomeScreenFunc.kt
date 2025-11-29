@@ -31,6 +31,7 @@ import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.ui.waste.CategoryCard
 import org.example.cashflow.ui.waste.CreateWaste
 import org.example.cashflow.ui.waste.WasteCard
+import org.example.cashflow.ui.waste.myLang
 import org.example.cashflow.viewmodels.HomeScreenComponent
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.ExperimentalTime
@@ -43,19 +44,25 @@ fun HomeScreen(
     modifier: Modifier = Modifier.fillMaxWidth(),
     isCreating: MutableState<Boolean>
 ){
-    val wastes by component.getWastes().collectAsState(initial = emptyList())
+    val wastes by component.wasteState.collectAsState(initial = emptyList())
     val wasteCards = Converter
         .convertWaste(wastes)
     val wasteCategories = WasteCategories.entries.toTypedArray()
-    component.updateCurrency()
+    val currency = component.currencyState.collectAsState().value.valute
+    val sum = component.sumWastes(wasteCards,
+        currency,
+        myLang != "ru"
+    )
     Box(modifier = modifier){
         Column {
             Text(stringResource(Res.string.expenses),
                 fontSize = 21.sp,
                 modifier = Modifier.padding(start = 14.dp)
                 )
-            Text(wasteCards.sumOf {
-                it.listWaste.sumOf { i -> i.cost.toInt() } }.toString() ,
+            Text("${sum}${
+                if (myLang == "ru") "₽" 
+                else
+                "$"}",
                 fontSize = 28.sp,
                 modifier = Modifier.padding(start = 14.dp),
                 fontWeight = FontWeight.Bold)

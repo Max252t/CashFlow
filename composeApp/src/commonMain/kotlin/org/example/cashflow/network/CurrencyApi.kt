@@ -15,8 +15,8 @@ class CurrencyApi {
         this.url = url
         httpClient = createUnsafeHttpClient()
     }
-    fun getData(): CbrDailyResponse?{
-        var data: CbrDailyResponse? = null
+    fun getData(): CbrDailyResponse{
+        var data = CbrDailyResponse()
         runBlocking {
             val ktor = async {
                 val jsonData: String = httpClient.get(url).body()
