@@ -13,6 +13,7 @@ import org.example.cashflow.db.currency.CbrDailyResponse
 import org.example.cashflow.db.currency.CurrencyData
 import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.db.waste.WasteCard
+import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.db.waste.WasteDatabase
 import org.example.cashflow.db.waste.WasteItemDB
 import org.example.cashflow.network.CurrencyApi
@@ -79,7 +80,8 @@ class HomeScreenComponent(
         }
     }
 
-    fun sumWastes(wasteList: List<WasteCard>, valute: Map<String, CurrencyData>, inDollars: Boolean = false): Int{
+    fun sumWastes(wasteList: List<WasteCard>, valute: Map<String, CurrencyData>,
+                  inDollars: Boolean = false): Int{
         var sum = 0
         if (valute.isNotEmpty()) {
             sum = wasteList.sumOf {card -> card.listWaste.sumOf { (it.cost * (if (it.currency.title!="RUB")
@@ -87,10 +89,24 @@ class HomeScreenComponent(
             else 1f)).toInt() }  }
             sum /= if (!inDollars) 1 else valute["USD"]!!.value.toInt()
             _sumFlowState.value = sum
+            toRubles(wasteList, valute)
         }
         return sum
     }
+    fun toRubles(wasteList: List<WasteCard>,
+                 valute: Map<String, CurrencyData>): Map<String, Int>{
+        val wasteCategories = WasteCategories.entries.toTypedArray()
 
+        val sortCategories = mutableMapOf<String,  Int>()
+
+        wasteCategories.forEach {
+            val list = wasteList.flatMap { (listWaste, _, _) ->
+                listWaste.filter { (wasteCategory, _, _) -> wasteCategory == it } }
+            val listCost = list.map { (_, cost, currency) -> if (currency.title!="RUB") cost * valute[currency.title]!!.value else cost  }
+            sortCategories += it.name to listCost.sumOf {cost-> cost.toInt() }
+        }
+        return sortCategories
+    }
 
     companion object{
         private val _stateFlowWasteCard = MutableStateFlow(WasteCard(emptyList(), ""))
