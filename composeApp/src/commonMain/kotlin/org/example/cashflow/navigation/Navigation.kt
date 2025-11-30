@@ -46,7 +46,8 @@ fun BottomNavBar(
             val selected = isSelected == item.route
             NavigationBarItem(
                 selected = selected,
-                onClick = { rootComponent.navigateTo(item.route)
+                onClick = {
+                    rootComponent.navigateTo(item.route)
                           isSelected = rootComponent.childStack.active.configuration
                           },
                 colors = NavigationBarItemDefaults.colors(

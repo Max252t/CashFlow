@@ -39,9 +39,10 @@ import org.example.cashflow.db.waste.WasteDao
 import org.example.cashflow.navigation.BottomNavBar
 import org.example.cashflow.navigation.BottomNavItem
 import org.example.cashflow.navigation.RootComponent
-import org.example.cashflow.ui.AccountScreen
+import org.example.cashflow.ui.screens.AccountScreen
 import org.example.cashflow.ui.ColorsUI
-import org.example.cashflow.ui.HomeScreen
+import org.example.cashflow.ui.screens.HomeScreen
+import org.example.cashflow.ui.screens.WasteScreen
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -112,7 +113,8 @@ fun App(rootComponent: RootComponent,
                 animation = stackAnimation(slide())
             ) { child ->
                 when (val instance = child.instance) {
-                    is RootComponent.Child.AccountScreen -> AccountScreen(instance.component,
+                    is RootComponent.Child.AccountScreen -> AccountScreen(
+                        instance.component,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(innerPadding))
@@ -122,12 +124,18 @@ fun App(rootComponent: RootComponent,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(innerPadding),
-                            isCreating
+                            isCreating,
+                            rootComponent
                         )
                     }
+
+                    is RootComponent.Child.WasteScreen -> WasteScreen(instance.component,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(innerPadding)
+                        )
                 }
             }
-
         }
 
         }

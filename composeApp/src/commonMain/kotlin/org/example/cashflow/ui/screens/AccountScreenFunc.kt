@@ -1,4 +1,4 @@
-package org.example.cashflow.ui
+package org.example.cashflow.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

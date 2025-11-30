@@ -37,6 +37,8 @@ kotlin {
             implementation(libs.androidx.room.sqlite.wrapper)
             implementation(libs.ktor.client.android)
             //  implementation(libs.coil.network.okhttp)
+            implementation(libs.ktor.client.json.jvm)
+            implementation(libs.ktor.client.gson)
 
         }
         commonMain.dependencies {
@@ -55,8 +57,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.decompose.extensions.compose)
             implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.json.jvm)
-            implementation(libs.ktor.client.gson)
+
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             api(libs.koin.core)

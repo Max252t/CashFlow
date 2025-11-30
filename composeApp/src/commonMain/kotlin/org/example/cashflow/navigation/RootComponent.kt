@@ -11,6 +11,7 @@ import org.example.cashflow.navigation.RootComponent.Child.*
 import org.example.cashflow.navigation.interfaces.RootComponentPattern
 import org.example.cashflow.viewmodels.AccountScreenComponent
 import org.example.cashflow.viewmodels.HomeScreenComponent
+import org.example.cashflow.viewmodels.WasteScreenComponent
 
 class RootComponent(
     componentContext: ComponentContext,
@@ -40,9 +41,12 @@ class RootComponent(
                 )
             )
 
-            Config.WasteScreen -> {
-                TODO()
-            }
+            Config.WasteScreen -> WasteScreen(
+                WasteScreenComponent(
+                    context,
+                    wasteDatabase
+                )
+            )
         }
     }
    override fun navigateTo(route: Config){
@@ -54,10 +58,14 @@ class RootComponent(
     }
 
     override var currentRoute = "home"
+    override fun navigateAHead(route: Config) {
+    }
 
     sealed class Child{
         data class HomeScreen(val component: HomeScreenComponent): Child()
         data class AccountScreen(val component: AccountScreenComponent): Child()
+        data class WasteScreen(val component: WasteScreenComponent): Child()
+
 
     }
 

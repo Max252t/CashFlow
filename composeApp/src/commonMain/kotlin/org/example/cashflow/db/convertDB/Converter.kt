@@ -72,7 +72,8 @@ class Converter(private val waste: Waste) {
                 cost =  convertCost(costList),
                 listWasteCategories = convertWaste(categoryList),
                 currency = convertCurrency(currencyList),
-                date = wasteCard.date
+                date = wasteCard.date,
+                card = wasteCard.card
                 )
         }
         @TypeConverter
