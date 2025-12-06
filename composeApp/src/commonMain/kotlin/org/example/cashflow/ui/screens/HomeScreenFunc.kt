@@ -74,7 +74,7 @@ fun HomeScreen(
                         )
                 }
             }
-            WasteCards(wasteCards,
+            WasteCards(wastes,
                 toWaste = rootComponent::navigateTo)
         }
         if (isCreating.value){

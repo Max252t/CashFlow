@@ -23,7 +23,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.example.cashflow.db.convertDB.Converter
+import org.example.cashflow.db.currency.Currency
 import org.example.cashflow.db.waste.Waste
+import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.db.waste.WasteItemDB
 import org.example.cashflow.viewmodels.SingletonHome
 import org.jetbrains.compose.resources.stringResource
@@ -34,24 +37,23 @@ import kotlin.math.round
 @Preview(showBackground = true)
 @Composable
 fun WasteItem(
-    wasteItem: WasteItemDB,
-    date: String
+    waste: Waste
               ){
+    val converter = Converter(waste)
+    val wasteItem = WasteItemDB(
+        converter.getListWaste()[0] ?: WasteCategories.Other,
+        converter.getListCost()[0],
+        converter.getListCurrency()[0] ?: Currency.Ruble,
+        waste.id
+        )
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {
             when(it) {
                 SwipeToDismissBoxValue.StartToEnd -> {
-                    SingletonHome.homeScreenComponent.deleteWaste(Waste(
-                        cost = wasteItem.cost.toString(),
-                        listWasteCategories = wasteItem.wasteCategory.name,
-                        id = wasteItem.id,
-                        currency = wasteItem.currency.name,
-                        wasteItem.date,
-                        "No_Name"
-                    ))
+                    SingletonHome.homeScreenComponent.deleteWaste(waste)
                 }
                 SwipeToDismissBoxValue.EndToStart -> {
-
+                    SingletonHome.homeScreenComponent.deleteWaste(waste)
                 }
                 SwipeToDismissBoxValue.Settled -> return@rememberSwipeToDismissBoxState false
             }
@@ -88,7 +90,7 @@ fun WasteItem(
                         fontSize = 19.sp
                     )
                     Text(
-                        text = date,
+                        text = wasteItem.date,
                         fontSize = 13.sp,
                         color = Color.Gray
                     )

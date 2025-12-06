@@ -14,9 +14,7 @@ fun WasteScreen(
     modifier: Modifier = Modifier.fillMaxWidth()
 ){
     val wastes by component.wasteState.collectAsState(initial = emptyList())
-    val wasteCards = Converter
-        .convertWaste(wastes)
     WasteCards(isWasteScreen = true,
-        wasteCards = wasteCards,
+        wasteCards = wastes,
         modifier = modifier)
 }

@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,6 +37,8 @@ class HomeScreenComponent(
     val wasteState = _stateFlowWaste.asStateFlow()
 
     private val _sumFlowState = MutableStateFlow(0)
+
+
 
 
     override fun createWaste(wasteCard: WasteCard) {

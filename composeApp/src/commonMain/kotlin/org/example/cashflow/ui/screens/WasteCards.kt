@@ -22,15 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cashflow.composeapp.generated.resources.Res
 import cashflow.composeapp.generated.resources.last_waste
-import org.example.cashflow.db.waste.WasteCard
+import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.navigation.RootComponent
 import org.example.cashflow.ui.ColorsUI
-import org.example.cashflow.ui.waste.WasteCard
+import org.example.cashflow.ui.waste.WasteItem
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun WasteCards(
-    wasteCards: List<WasteCard>,
+    wasteCards: List<Waste>,
     toWaste: (config: RootComponent.Config) -> Unit = {},
     isWasteScreen: Boolean = false,
     modifier: Modifier = Modifier
@@ -76,9 +76,9 @@ fun WasteCards(
                 }
 
                 itemsIndexed(
-                    if (wasteCards.size >6 && !isWasteScreen) wasteCards.takeLast(6) else wasteCards
+                    if (wasteCards.size > 6 && !isWasteScreen) wasteCards.takeLast(6) else wasteCards.reversed()
                 ) { _, value ->
-                    WasteCard(value)
+                    WasteItem(value)
                 }
             }
 
