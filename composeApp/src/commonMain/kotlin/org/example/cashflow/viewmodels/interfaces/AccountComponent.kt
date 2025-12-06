@@ -1,4 +1,4 @@
-package org.example.cashflow.navigation.interfaces
+package org.example.cashflow.viewmodels.interfaces
 
 interface AccountComponent {
     fun getPerson()

@@ -1,7 +1,4 @@
-import com.google.devtools.ksp.gradle.KspExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
-
 
 
 plugins {
@@ -38,7 +35,10 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.androidx.room.sqlite.wrapper)
-          //  implementation(libs.coil.network.okhttp)
+            implementation(libs.ktor.client.android)
+            //  implementation(libs.coil.network.okhttp)
+            implementation(libs.ktor.client.json.jvm)
+            implementation(libs.ktor.client.gson)
 
         }
         commonMain.dependencies {
@@ -56,20 +56,22 @@ kotlin {
             implementation(libs.decompose)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.decompose.extensions.compose)
-            /*implementation(libs.coil3.coil)
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network)*/
+            implementation(libs.ktor.client.core)
+
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
-
+            implementation(libs.kotlinx.datetime.v071)
         }
-//        iosMain.dependencies {
-//            implementation(libs.coil.network)
-//        }
+        iosMain.dependencies {
+            //implementation(libs.coil.network)
+            implementation(libs.ktor.client.darwin)
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

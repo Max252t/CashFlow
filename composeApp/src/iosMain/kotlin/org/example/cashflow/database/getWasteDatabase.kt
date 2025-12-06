@@ -2,7 +2,7 @@ package org.example.cashflow.database
 
 import androidx.room.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
-import org.example.cashflow.db.WasteDatabase
+import org.example.cashflow.db.waste.WasteDatabase
 import platform.Foundation.NSHomeDirectory
 
 fun getWasteDatabase(): WasteDatabase {

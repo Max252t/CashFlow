@@ -1,14 +1,15 @@
 package org.example.cashflow.db.convertDB
 
 import androidx.room.TypeConverter
-import org.example.cashflow.db.WasteCategories
-import org.example.cashflow.db.Waste
-import org.example.cashflow.ui.waste.Currency
+import org.example.cashflow.db.waste.WasteCategories
+import org.example.cashflow.db.waste.Waste
+import org.example.cashflow.db.waste.WasteCard
+import org.example.cashflow.db.waste.WasteItemDB
+import org.example.cashflow.db.currency.Currency
 
-class Converter(val waste: Waste) {
-    val wasteCategories = WasteCategories.entries.toTypedArray().associateBy { it.name}
-    val wasteCurrency = Currency.entries.toTypedArray().associateBy { it.name}
-
+class Converter(private val waste: Waste) {
+    private val wasteCategories = WasteCategories.entries.toTypedArray().associateBy { it.name}
+    private val wasteCurrency = Currency.entries.toTypedArray().associateBy { it.name}
 
     fun getListWaste(): List<WasteCategories?>{
         return waste
@@ -26,31 +27,90 @@ class Converter(val waste: Waste) {
             .cost.split("#")
             .map { it.toFloat() }
     }
+    fun getListID(): Int?{
+        return waste.id
+    }
     companion object{
         @TypeConverter
         fun convertWaste(listWaste: List<WasteCategories>): String{
             var convertedList = listWaste.first().name
-            listWaste.forEach {
-                convertedList += "#" + it.name
+            if (listWaste.size>1) {
+                listWaste.subList(1, listWaste.size).forEach {
+                    convertedList += "#" + it.name
+                }
             }
             return convertedList
         }
         @TypeConverter
         fun convertCurrency(listCurrency: List<Currency>): String{
             var convertedList = listCurrency.first().name
-            listCurrency.forEach {
-                convertedList += "#" + it.name
+            if (listCurrency.size>1) {
+                listCurrency.subList(1, listCurrency.size).forEach {
+                    convertedList += "#" + it.name
+                }
             }
             return convertedList
         }
         @TypeConverter
         fun convertCost(listCost: List<Float>): String{
             var convertedList = listCost.first().toString()
-            listCost.forEach {
-                convertedList += "#$it"
+            if (listCost.size>1) {
+                listCost.subList(1, listCost.size).forEach {
+                    convertedList += "#$it"
+                }
             }
             return convertedList
         }
+        @TypeConverter
+        fun convertWasteCard(wasteCard: WasteCard): Waste{
+            val costList = mutableListOf<Float>()
+            val currencyList = mutableListOf<Currency>()
+            val categoryList = mutableListOf<WasteCategories>()
+            wasteCard.listWaste.forEach {(wasteCategory, cost, currency) ->
+                costList.add(cost)
+                currencyList.add(currency)
+                categoryList.add(wasteCategory)
+            }
+            return Waste(
+                cost =  convertCost(costList),
+                listWasteCategories = convertWaste(categoryList),
+                currency = convertCurrency(currencyList),
+                date = wasteCard.date,
+                card = wasteCard.card
+                )
+        }
+        @TypeConverter
+        fun convertWaste(wasteList: List<Waste>): List<WasteCard>{
+            val wasteCardList = mutableListOf<WasteCard>()
+            wasteList.forEach {
+                val converter = Converter(it)
+                val cost = converter.getListCost()
+                val currency = converter.getListCurrency()
+                val waste = converter.getListWaste()
+                val id = converter.getListID()
+
+                val wasteItemDBList = mutableListOf<WasteItemDB>()
+                cost.forEachIndexed{ index, _ ->
+                    wasteItemDBList.add(
+                        WasteItemDB(
+                            waste[index] ?: WasteCategories.Other,
+                            cost[index],
+                            currency[index] ?: Currency.Dollar,
+                            id,
+                            it.date
+                        )
+                    )
+                }
+                wasteCardList.add(
+                    WasteCard(wasteItemDBList,
+                        it.date
+                    )
+                )
+            }
+            return wasteCardList
+        }
+
+
     }
 
 }

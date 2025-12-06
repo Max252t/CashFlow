@@ -15,11 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
@@ -37,16 +35,15 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import org.example.cashflow.db.WasteDao
+import org.example.cashflow.db.waste.WasteDao
 import org.example.cashflow.navigation.BottomNavBar
 import org.example.cashflow.navigation.BottomNavItem
 import org.example.cashflow.navigation.RootComponent
-import org.example.cashflow.ui.AccountScreen
+import org.example.cashflow.ui.screens.AccountScreen
 import org.example.cashflow.ui.ColorsUI
-import org.example.cashflow.ui.HomeScreen
+import org.example.cashflow.ui.screens.HomeScreen
+import org.example.cashflow.ui.screens.WasteScreen
+import org.example.cashflow.viewmodels.SingletonHome
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -56,8 +53,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App(rootComponent: RootComponent,
         wasteDao: WasteDao) {
     MaterialTheme {
-        val waste by wasteDao.getAllWaste().collectAsState(emptyList())
-        val scope = rememberCoroutineScope()
         val childStack by rootComponent.childStack.subscribeAsState()
         val isCreating = remember { mutableStateOf(false) }
         Box(Modifier
@@ -102,7 +97,7 @@ fun App(rootComponent: RootComponent,
                             isCreating.value = true
                         },
                         shape = CircleShape,
-                        containerColor = ColorsUI.cian,
+                        containerColor = ColorsUI.purple_light,
                     ) {
                         Icon(
                             imageVector = vectorResource(Res.drawable.addi),
@@ -119,22 +114,30 @@ fun App(rootComponent: RootComponent,
                 animation = stackAnimation(slide())
             ) { child ->
                 when (val instance = child.instance) {
-                    is RootComponent.Child.AccountScreen -> AccountScreen(instance.component,
+                    is RootComponent.Child.AccountScreen -> AccountScreen(
+                        instance.component,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(innerPadding))
                     is RootComponent.Child.HomeScreen -> {
+                        SingletonHome.homeScreenComponent = instance.component
                         HomeScreen(
                             instance.component,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(innerPadding),
-                            isCreating
+                            isCreating,
+                            rootComponent
                         )
                     }
+
+                    is RootComponent.Child.WasteScreen -> WasteScreen(instance.component,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(innerPadding)
+                        )
                 }
             }
-
         }
 
         }

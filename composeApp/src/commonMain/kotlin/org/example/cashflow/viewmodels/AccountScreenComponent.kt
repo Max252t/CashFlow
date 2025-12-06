@@ -1,8 +1,8 @@
-package org.example.cashflow.navigation
+package org.example.cashflow.viewmodels
 
 import com.arkivanov.decompose.ComponentContext
-import org.example.cashflow.navigation.interfaces.AccountComponent
-import org.example.cashflow.navigation.interfaces.Changes
+import org.example.cashflow.viewmodels.interfaces.AccountComponent
+import org.example.cashflow.viewmodels.interfaces.Changes
 
 class AccountScreenComponent(
     componentContext: ComponentContext

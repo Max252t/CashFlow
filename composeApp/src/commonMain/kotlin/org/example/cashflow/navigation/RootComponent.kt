@@ -5,8 +5,13 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import kotlinx.serialization.Serializable
-import org.example.cashflow.db.WasteDatabase
+
+import org.example.cashflow.db.waste.WasteDatabase
+import org.example.cashflow.navigation.RootComponent.Child.*
 import org.example.cashflow.navigation.interfaces.RootComponentPattern
+import org.example.cashflow.viewmodels.AccountScreenComponent
+import org.example.cashflow.viewmodels.HomeScreenComponent
+import org.example.cashflow.viewmodels.WasteScreenComponent
 
 class RootComponent(
     componentContext: ComponentContext,
@@ -26,12 +31,21 @@ class RootComponent(
         context: ComponentContext
     ): Child {
         return when(config){
-            is Config.AccountScreen -> Child.AccountScreen(
+            is Config.AccountScreen -> AccountScreen(
                 AccountScreenComponent(context)
             )
-            Config.HomeScreen -> Child.HomeScreen(
-                HomeScreenComponent(context,
-                    wasteDatabase)
+            Config.HomeScreen -> HomeScreen(
+                HomeScreenComponent(
+                    context,
+                    wasteDatabase
+                )
+            )
+
+            Config.WasteScreen -> WasteScreen(
+                WasteScreenComponent(
+                    context,
+                    wasteDatabase
+                )
             )
         }
     }
@@ -44,10 +58,15 @@ class RootComponent(
     }
 
     override var currentRoute = "home"
+    override fun navigateAHead(route: Config) {
+    }
 
     sealed class Child{
         data class HomeScreen(val component: HomeScreenComponent): Child()
         data class AccountScreen(val component: AccountScreenComponent): Child()
+        data class WasteScreen(val component: WasteScreenComponent): Child()
+
+
     }
 
     @Serializable
@@ -57,5 +76,7 @@ class RootComponent(
 
         @Serializable
         data object AccountScreen: Config()
+        @Serializable
+        data object WasteScreen: Config()
     }
 }

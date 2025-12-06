@@ -1,4 +1,4 @@
-package org.example.cashflow.db
+package org.example.cashflow.db.waste
 
 import androidx.room.Dao
 import androidx.room.Delete
