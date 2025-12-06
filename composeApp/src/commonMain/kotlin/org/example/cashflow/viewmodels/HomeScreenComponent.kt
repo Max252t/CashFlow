@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.db.currency.CbrDailyResponse
+import org.example.cashflow.db.currency.Currency
 import org.example.cashflow.db.currency.CurrencyData
 import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.db.waste.WasteCard
@@ -39,9 +40,17 @@ class HomeScreenComponent(
 
     override fun createWaste(wasteCard: WasteCard) {
         CoroutineScope(Dispatchers.IO).launch {
-            wasteDatabase.wasteDao().upsert(
-                Converter.convertWasteCard(wasteCard)
-            )
+            wasteCard.listWaste.forEach {
+                wasteDatabase.wasteDao().upsert(
+                    Waste(
+                        it.cost.toString(),
+                        it.wasteCategory.name,
+                        currency = it.currency.name,
+                        date = wasteCard.date,
+                        card = wasteCard.card
+                    )
+                )
+            }
         }
     }
     override fun getWastes(): StateFlow<List<Waste>> {
@@ -83,7 +92,7 @@ class HomeScreenComponent(
     fun sumWastes(wasteList: List<WasteCard>, valute: Map<String, CurrencyData>,
                   inDollars: Boolean = false): Int{
         var sum = 0
-        if (valute.isNotEmpty()) {
+        if (valute.isNotEmpty() && wasteList.isNotEmpty()) {
             sum = wasteList.sumOf {card -> card.listWaste.sumOf { (it.cost * (if (it.currency.title!="RUB")
                 valute[it.currency.title]!!.value.toFloat()
             else 1f)).toInt() }  }

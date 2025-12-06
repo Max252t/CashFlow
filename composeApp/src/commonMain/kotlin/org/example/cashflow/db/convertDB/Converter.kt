@@ -27,6 +27,9 @@ class Converter(private val waste: Waste) {
             .cost.split("#")
             .map { it.toFloat() }
     }
+    fun getListID(): Int?{
+        return waste.id
+    }
     companion object{
         @TypeConverter
         fun convertWaste(listWaste: List<WasteCategories>): String{
@@ -84,15 +87,20 @@ class Converter(private val waste: Waste) {
                 val cost = converter.getListCost()
                 val currency = converter.getListCurrency()
                 val waste = converter.getListWaste()
-                val wasteItemList = cost
-                    .zip(waste)
-                    .zip(currency) { (a, b), c ->
-                        Triple(a, b, c)}
+                val id = converter.getListID()
+
                 val wasteItemDBList = mutableListOf<WasteItemDB>()
-                wasteItemList.forEach { value -> wasteItemDBList.add(
-                    WasteItemDB(cost = value.first,
-                        wasteCategory =  value.second ?: WasteCategories.Other,
-                        currency =  value.third ?: Currency.Dollar)) }
+                cost.forEachIndexed{ index, _ ->
+                    wasteItemDBList.add(
+                        WasteItemDB(
+                            waste[index] ?: WasteCategories.Other,
+                            cost[index],
+                            currency[index] ?: Currency.Dollar,
+                            id,
+                            it.date
+                        )
+                    )
+                }
                 wasteCardList.add(
                     WasteCard(wasteItemDBList,
                         it.date
@@ -101,6 +109,7 @@ class Converter(private val waste: Waste) {
             }
             return wasteCardList
         }
+
 
     }
 

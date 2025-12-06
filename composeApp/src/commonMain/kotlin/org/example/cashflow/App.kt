@@ -43,6 +43,7 @@ import org.example.cashflow.ui.screens.AccountScreen
 import org.example.cashflow.ui.ColorsUI
 import org.example.cashflow.ui.screens.HomeScreen
 import org.example.cashflow.ui.screens.WasteScreen
+import org.example.cashflow.viewmodels.SingletonHome
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -119,6 +120,7 @@ fun App(rootComponent: RootComponent,
                             .fillMaxWidth()
                             .padding(innerPadding))
                     is RootComponent.Child.HomeScreen -> {
+                        SingletonHome.homeScreenComponent = instance.component
                         HomeScreen(
                             instance.component,
                             modifier = Modifier

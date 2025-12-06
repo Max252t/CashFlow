@@ -74,11 +74,9 @@ fun WasteCards(
                         }
                     }
                 }
+
                 itemsIndexed(
-                    wasteCards.subList(
-                        0,
-                        if (wasteCards.size < 6) wasteCards.size else 6
-                    )
+                    if (wasteCards.size >6 && !isWasteScreen) wasteCards.takeLast(6) else wasteCards
                 ) { _, value ->
                     WasteCard(value)
                 }
