@@ -4,14 +4,11 @@ import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.db.currency.CbrDailyResponse
-import org.example.cashflow.db.currency.Currency
 import org.example.cashflow.db.currency.CurrencyData
 import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.db.waste.WasteCard
@@ -77,6 +74,7 @@ class HomeScreenComponent(
         CoroutineScope(Dispatchers.IO).launch {
             wasteDatabase.wasteDao().delete(waste)
         }
+        getWastes()
     }
 
     override fun convertData(listWaste: List<Waste>) {
