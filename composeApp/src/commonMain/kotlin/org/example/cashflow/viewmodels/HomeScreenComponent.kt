@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,8 +35,6 @@ class HomeScreenComponent(
     val wasteState = _stateFlowWaste.asStateFlow()
 
     private val _sumFlowState = MutableStateFlow(0)
-
-
 
 
     override fun createWaste(wasteCard: WasteCard) {
@@ -72,9 +71,17 @@ class HomeScreenComponent(
 
     override fun deleteWaste(waste: Waste) {
         CoroutineScope(Dispatchers.IO).launch {
+            val currentList = _stateFlowWaste.value.toMutableList()
+            currentList.removeAll { it.id == waste.id }
+            _stateFlowWaste.value = currentList
+
             wasteDatabase.wasteDao().delete(waste)
+
+            delay(100)
+            wasteDatabase.wasteDao().getAllWaste().collect { data ->
+                _stateFlowWaste.value = data
+            }
         }
-        getWastes()
     }
 
     override fun convertData(listWaste: List<Waste>) {

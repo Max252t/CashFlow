@@ -18,7 +18,6 @@ import org.example.cashflow.db.currency.Currency
 import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.db.waste.WasteItemDB
-import org.example.cashflow.viewmodels.SingletonHome
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.math.pow
 import kotlin.math.round
@@ -26,7 +25,8 @@ import kotlin.math.round
 @Preview(showBackground = true)
 @Composable
 fun WasteItem(
-    waste: Waste
+    waste: Waste,
+    onItemRemoved: (Waste) -> Unit = {}
 ){
     var scaleY by remember { mutableStateOf(Animatable(initialValue = 1f)) }
     var animated by remember { mutableStateOf(false) }
@@ -41,13 +41,10 @@ fun WasteItem(
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {
             when(it) {
-                SwipeToDismissBoxValue.StartToEnd -> {
-                    SingletonHome.homeScreenComponent.deleteWaste(waste)
-                    animated = true
-                }
+                SwipeToDismissBoxValue.StartToEnd,
                 SwipeToDismissBoxValue.EndToStart -> {
-                    SingletonHome.homeScreenComponent.deleteWaste(waste)
                     animated = true
+                    onItemRemoved(waste)
                 }
                 SwipeToDismissBoxValue.Settled -> return@rememberSwipeToDismissBoxState false
             }
@@ -59,7 +56,7 @@ fun WasteItem(
     LaunchedEffect(animated){
         scaleY.animateTo(
             targetValue = if (animated)  0f else 1f,
-            animationSpec = tween(durationMillis = 200)
+            animationSpec = tween(durationMillis = 400)
         )
     }
     if (!animated) {
