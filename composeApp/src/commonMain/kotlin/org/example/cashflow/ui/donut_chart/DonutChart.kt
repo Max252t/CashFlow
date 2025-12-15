@@ -37,12 +37,17 @@ fun DonutChart(
     }
 
     val colors = mutableListOf(
-        Color(0xFF6EB7B0),
-        Color(0xFF8CD0BB),
-        Color(0xFF588376),
-        Color(0xFF68C7C9),
-        Color(0xFF1ABC9C),
-        Color(0xFFAAFFE7)
+        Color(0xFF9963FA),
+        Color(0xFF54C4EF),
+        Color(0xFF4A49D5),
+        Color(0xFFE68ACC),
+        Color(0xFF4C3B77),
+        Color(0xFF9963FA),
+
+        Color(0xFF4A49D5),
+        Color(0xFFE68ACC),
+        Color(0xFF4C3B77),
+        Color(0xFF9963FA),
     )
     var animationPlayed by remember { mutableStateOf(false) }
 

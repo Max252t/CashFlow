@@ -51,7 +51,7 @@ fun WasteCards(
         }
     }
     Box(
-        contentAlignment = if (!isWasteScreen) Alignment.BottomCenter else Alignment.TopCenter,
+        contentAlignment = if (!isWasteScreen) Alignment.BottomCenter else Alignment.TopStart,
         modifier = Modifier.fillMaxHeight()
     ) {
         Card(
