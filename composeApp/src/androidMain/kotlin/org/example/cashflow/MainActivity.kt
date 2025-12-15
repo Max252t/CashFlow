@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         val root: RootComponent by inject{ parametersOf(retainedComponent {
             it
         }) }
-        val wasteDatabase by inject<WasteDatabase>()
+        val wasteDatabase: WasteDatabase by inject()
         setContent {
             App(root, wasteDatabase.wasteDao())
         }

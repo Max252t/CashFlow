@@ -12,6 +12,7 @@ import org.example.cashflow.navigation.interfaces.RootComponentPattern
 import org.example.cashflow.viewmodels.AccountScreenComponent
 import org.example.cashflow.viewmodels.HomeScreenComponent
 import org.example.cashflow.viewmodels.WasteScreenComponent
+import org.koin.compose.getKoin
 
 class RootComponent(
     componentContext: ComponentContext,
@@ -34,12 +35,14 @@ class RootComponent(
             is Config.AccountScreen -> AccountScreen(
                 AccountScreenComponent(context)
             )
-            Config.HomeScreen -> HomeScreen(
-                HomeScreenComponent(
-                    context,
-                    wasteDatabase
+            Config.HomeScreen -> {
+                HomeScreen(
+                    HomeScreenComponent(
+                        context,
+                        wasteDatabase
+                    )
                 )
-            )
+            }
 
             Config.WasteScreen -> WasteScreen(
                 WasteScreenComponent(

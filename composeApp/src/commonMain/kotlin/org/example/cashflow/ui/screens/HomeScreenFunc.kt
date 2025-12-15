@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -41,9 +40,9 @@ fun HomeScreen(
     rootComponent: RootComponent
 ){
 
-    val wastes by component.wasteState.collectAsState(initial = emptyList())
+    val wastes = component.wasteState.collectAsState(emptyList())
     val wasteCards = Converter
-        .convertWaste(wastes)
+        .convertWaste(wastes.value)
     val wasteCategories = WasteCategories.entries.toTypedArray()
     val currency = component.currencyState.collectAsState().value.valute
     val sum = component.sumWastes(wasteCards,
@@ -74,8 +73,10 @@ fun HomeScreen(
                         )
                 }
             }
-            WasteCards(wastes,
-                toWaste = rootComponent::navigateTo)
+            WasteCards(
+                wasteCards = wastes.value,
+                toWaste = rootComponent::navigateTo
+                )
         }
         if (isCreating.value){
             Box(modifier = Modifier.fillMaxSize(),

@@ -1,35 +1,23 @@
 package org.example.cashflow.ui.waste
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.graphicsLayer
 import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.db.currency.Currency
 import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.db.waste.WasteItemDB
-import org.example.cashflow.viewmodels.SingletonHome
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.math.pow
 import kotlin.math.round
@@ -37,8 +25,12 @@ import kotlin.math.round
 @Preview(showBackground = true)
 @Composable
 fun WasteItem(
-    waste: Waste
-              ){
+    waste: Waste,
+    onItemRemoved: (Waste) -> Unit = {}
+){
+    var scaleY by remember { mutableStateOf(Animatable(initialValue = 1f)) }
+    var animated by remember { mutableStateOf(false) }
+
     val converter = Converter(waste)
     val wasteItem = WasteItemDB(
         converter.getListWaste()[0] ?: WasteCategories.Other,
@@ -49,11 +41,10 @@ fun WasteItem(
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = {
             when(it) {
-                SwipeToDismissBoxValue.StartToEnd -> {
-                    SingletonHome.homeScreenComponent.deleteWaste(waste)
-                }
+                SwipeToDismissBoxValue.StartToEnd,
                 SwipeToDismissBoxValue.EndToStart -> {
-                    SingletonHome.homeScreenComponent.deleteWaste(waste)
+                    animated = true
+                    onItemRemoved(waste)
                 }
                 SwipeToDismissBoxValue.Settled -> return@rememberSwipeToDismissBoxState false
             }
@@ -61,66 +52,22 @@ fun WasteItem(
         },
         positionalThreshold = { it * .25f }
     )
-    SwipeToDismissBox(
-        state = dismissState,
-        modifier = Modifier,
-        backgroundContent = { DismissBackground(dismissState)}
-    ) {
-        Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Icon(
-                    imageVector = wasteItem.wasteCategory.icon,
-                    contentDescription = wasteItem.wasteCategory
-                        .name
-                        .lowercase(),
-                    Modifier
-                        .size(48.dp)
-                        .clip(RoundedCornerShape(5.dp))
-                        .background(Color(0xFF0B0822)),
-                    tint = Color.White,
-                )
-                Spacer(Modifier.width(10.dp))
-                Column {
-                    Text(
-                        text = stringResource(wasteItem.wasteCategory.title),
-                        fontSize = 19.sp
-                    )
-                    Text(
-                        text = wasteItem.date,
-                        fontSize = 13.sp,
-                        color = Color.Gray
-                    )
 
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(1f),
-                    contentAlignment = Alignment.CenterEnd
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = "${
-                                wasteItem
-                                    .cost
-                                    .toDouble()
-                                    .roundTo(2)
-                            }",
-                            fontSize = 22.sp,
-                            modifier = Modifier
-                                .padding(3.dp)
-                        )
-                        Icon(
-                            wasteItem.currency.icon,
-                            contentDescription = "currency"
-                        )
-                    }
-                }
-            }
-            HorizontalDivider(color = Color.LightGray)
+    LaunchedEffect(animated){
+        scaleY.animateTo(
+            targetValue = if (animated)  0f else 1f,
+            animationSpec = tween(durationMillis = 400)
+        )
+    }
+    if (!animated) {
+        SwipeToDismissBox(
+            state = dismissState,
+            modifier = Modifier.graphicsLayer {
+               this.scaleY = scaleY.value
+            },
+            backgroundContent = { DismissBackground(dismissState) }
+        ) {
+            WasteCore(wasteItem)
         }
     }
 }

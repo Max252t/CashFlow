@@ -15,6 +15,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,10 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cashflow.composeapp.generated.resources.Res
 import cashflow.composeapp.generated.resources.last_waste
+import kotlinx.coroutines.launch
 import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.navigation.RootComponent
 import org.example.cashflow.ui.ColorsUI
 import org.example.cashflow.ui.waste.WasteItem
+import org.example.cashflow.viewmodels.SingletonHome
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -34,7 +40,16 @@ fun WasteCards(
     toWaste: (config: RootComponent.Config) -> Unit = {},
     isWasteScreen: Boolean = false,
     modifier: Modifier = Modifier
-               ) {
+) {
+    val localWastes = remember { wasteCards.toMutableStateList() }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(wasteCards) {
+        if (localWastes != wasteCards) {
+            localWastes.clear()
+            localWastes.addAll(wasteCards)
+        }
+    }
     Box(
         contentAlignment = if (!isWasteScreen) Alignment.BottomCenter else Alignment.TopCenter,
         modifier = Modifier.fillMaxHeight()
@@ -75,10 +90,18 @@ fun WasteCards(
                     }
                 }
 
+
                 itemsIndexed(
-                    if (wasteCards.size > 6 && !isWasteScreen) wasteCards.takeLast(6) else wasteCards.reversed()
+                    if (localWastes.size > 6 && !isWasteScreen) localWastes.takeLast(6) else localWastes.reversed(),
+                    key = {_, value -> value.id ?: 0}
                 ) { _, value ->
-                    WasteItem(value)
+                    WasteItem(value,
+                        onItemRemoved = { removedWaste ->
+                            localWastes.removeAll { it.id == removedWaste.id }
+                            coroutineScope.launch {
+                                SingletonHome.homeScreenComponent.deleteWaste(removedWaste)
+                            }
+                        })
                 }
             }
 

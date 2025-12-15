@@ -56,6 +56,7 @@ class WasteScreenComponent(
         CoroutineScope(Dispatchers.IO).launch {
             wasteDatabase.wasteDao().delete(waste)
         }
+        getWastes()
     }
 
     override fun convertData(listWaste: List<Waste>) {

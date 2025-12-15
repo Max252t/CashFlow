@@ -9,9 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.example.cashflow.db.convertDB.Converter
 import org.example.cashflow.db.currency.CbrDailyResponse
-import org.example.cashflow.db.currency.Currency
 import org.example.cashflow.db.currency.CurrencyData
 import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.db.waste.WasteCard
@@ -37,8 +35,6 @@ class HomeScreenComponent(
     val wasteState = _stateFlowWaste.asStateFlow()
 
     private val _sumFlowState = MutableStateFlow(0)
-
-
 
 
     override fun createWaste(wasteCard: WasteCard) {
@@ -75,7 +71,16 @@ class HomeScreenComponent(
 
     override fun deleteWaste(waste: Waste) {
         CoroutineScope(Dispatchers.IO).launch {
+            val currentList = _stateFlowWaste.value.toMutableList()
+            currentList.removeAll { it.id == waste.id }
+            _stateFlowWaste.value = currentList
+
             wasteDatabase.wasteDao().delete(waste)
+
+            delay(100)
+            wasteDatabase.wasteDao().getAllWaste().collect { data ->
+                _stateFlowWaste.value = data
+            }
         }
     }
 
