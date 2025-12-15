@@ -90,7 +90,6 @@ fun WasteCards(
                     }
                 }
 
-
                 itemsIndexed(
                     if (localWastes.size > 6 && !isWasteScreen) localWastes.takeLast(6) else localWastes.reversed(),
                     key = {_, value -> value.id ?: 0}

@@ -32,6 +32,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import org.example.cashflow.db.waste.WasteCard
+import org.example.cashflow.ui.CameraWaste
 import org.example.cashflow.ui.ColorsUI
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.time.Clock
@@ -110,7 +111,9 @@ fun CreateWaste(
                             )
                     }
                 },
-                byCamera = {},
+                byCamera = {
+                    CameraWaste()
+                },
 
             )
         }

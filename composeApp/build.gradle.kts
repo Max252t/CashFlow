@@ -39,6 +39,14 @@ kotlin {
             //  implementation(libs.coil.network.okhttp)
             implementation(libs.ktor.client.json.jvm)
             implementation(libs.ktor.client.gson)
+            implementation(libs.text.recognition)
+
+            implementation("androidx.camera:camera-core:1.6.0-alpha01")
+            implementation("androidx.camera:camera-camera2:1.6.0-alpha01")
+            implementation("androidx.camera:camera-lifecycle:1.6.0-alpha01")
+            implementation("androidx.camera:camera-view:1.6.0-alpha01")
+            implementation("androidx.camera:camera-mlkit-vision:1.6.0-alpha01")
+            implementation("androidx.camera:camera-extensions:1.6.0-alpha01")
 
         }
         commonMain.dependencies {

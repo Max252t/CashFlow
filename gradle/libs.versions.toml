@@ -31,6 +31,7 @@ lifecycleViewModel = "2.9.4"
 kspVersion = "2.2.20-2.0.4"
 room = "2.8.4"
 sqlite = "2.6.2"
+textRecognition = "16.0.1"
 
 [libraries]
 
@@ -74,6 +75,7 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", versi
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComposeMultiplatform" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
+text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "textRecognition" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
