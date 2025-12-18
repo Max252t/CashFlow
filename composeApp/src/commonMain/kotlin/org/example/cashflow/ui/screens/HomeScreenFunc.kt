@@ -24,8 +24,8 @@ import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.navigation.RootComponent
 import org.example.cashflow.ui.ColorsUI
 import org.example.cashflow.ui.waste.CategoryCard
-import org.example.cashflow.ui.waste.CreateWaste
-import org.example.cashflow.ui.waste.myLang
+import org.example.cashflow.ui.waste.create_waste.CreateWaste
+import org.example.cashflow.ui.waste.create_waste.myLang
 import org.example.cashflow.viewmodels.HomeScreenComponent
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.ExperimentalTime
@@ -75,7 +75,8 @@ fun HomeScreen(
             }
             WasteCards(
                 wasteCards = wastes.value,
-                toWaste = rootComponent::navigateTo
+                toWaste = rootComponent::navigateTo,
+                component = component
                 )
         }
         if (isCreating.value){

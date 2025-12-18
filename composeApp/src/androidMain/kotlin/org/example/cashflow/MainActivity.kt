@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.arkivanov.decompose.retainedComponent
-import org.example.cashflow.db.waste.WasteDatabase
 import org.example.cashflow.navigation.RootComponent
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -17,9 +16,8 @@ class MainActivity : ComponentActivity() {
         val root: RootComponent by inject{ parametersOf(retainedComponent {
             it
         }) }
-        val wasteDatabase: WasteDatabase by inject()
         setContent {
-            App(root, wasteDatabase.wasteDao())
+            App(root)
         }
     }
 }

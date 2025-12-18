@@ -31,7 +31,7 @@ import org.example.cashflow.db.waste.Waste
 import org.example.cashflow.navigation.RootComponent
 import org.example.cashflow.ui.ColorsUI
 import org.example.cashflow.ui.waste.WasteItem
-import org.example.cashflow.viewmodels.SingletonHome
+import org.example.cashflow.viewmodels.interfaces.WastesWork
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -39,7 +39,8 @@ fun WasteCards(
     wasteCards: List<Waste>,
     toWaste: (config: RootComponent.Config) -> Unit = {},
     isWasteScreen: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    component: WastesWork
 ) {
     val localWastes = remember { wasteCards.toMutableStateList() }
     val coroutineScope = rememberCoroutineScope()
@@ -51,7 +52,7 @@ fun WasteCards(
         }
     }
     Box(
-        contentAlignment = if (!isWasteScreen) Alignment.BottomCenter else Alignment.TopCenter,
+        contentAlignment = if (!isWasteScreen) Alignment.BottomCenter else Alignment.TopStart,
         modifier = Modifier.fillMaxHeight()
     ) {
         Card(
@@ -90,7 +91,6 @@ fun WasteCards(
                     }
                 }
 
-
                 itemsIndexed(
                     if (localWastes.size > 6 && !isWasteScreen) localWastes.takeLast(6) else localWastes.reversed(),
                     key = {_, value -> value.id ?: 0}
@@ -99,7 +99,7 @@ fun WasteCards(
                         onItemRemoved = { removedWaste ->
                             localWastes.removeAll { it.id == removedWaste.id }
                             coroutineScope.launch {
-                                SingletonHome.homeScreenComponent.deleteWaste(removedWaste)
+                                component.deleteWaste(removedWaste)
                             }
                         })
                 }
