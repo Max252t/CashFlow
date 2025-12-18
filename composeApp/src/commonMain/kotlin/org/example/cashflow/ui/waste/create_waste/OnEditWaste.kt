@@ -1,4 +1,4 @@
-package org.example.cashflow.ui.waste
+package org.example.cashflow.ui.waste.create_waste
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,10 +39,12 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
     )) }
     LazyColumn {
        itemsIndexed(wasteList){ index, _ ->
-           EditItem{ cost, currency, wasteCategories ->
-               wasteList[index] = WasteItemDB(wasteCategories,
+           EditItem { cost, currency, wasteCategories ->
+               wasteList[index] = WasteItemDB(
+                   wasteCategories,
                    cost,
-                   currency)
+                   currency
+               )
                returnList(wasteList)
                HomeScreenComponent.updateWasteCard(wasteList)
            }

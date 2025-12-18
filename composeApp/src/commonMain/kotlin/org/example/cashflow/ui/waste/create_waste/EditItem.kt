@@ -1,4 +1,4 @@
-package org.example.cashflow.ui.waste
+package org.example.cashflow.ui.waste.create_waste
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.layout.Box
@@ -54,6 +54,7 @@ fun EditItem(onCreateItem: (
     else mutableStateOf(Currency.Dollar) }
     var wasteInput by remember { mutableStateOf("") }
     var isCurrencyCheck by remember { mutableStateOf(false) }
+
     onCreateItem(if (wasteInput!="")wasteInput.toFloat() else 0f,
         selectCurrency,
         selectWaste

@@ -12,7 +12,6 @@ import org.example.cashflow.navigation.interfaces.RootComponentPattern
 import org.example.cashflow.viewmodels.AccountScreenComponent
 import org.example.cashflow.viewmodels.HomeScreenComponent
 import org.example.cashflow.viewmodels.WasteScreenComponent
-import org.koin.compose.getKoin
 
 class RootComponent(
     componentContext: ComponentContext,

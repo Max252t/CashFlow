@@ -23,7 +23,8 @@ fun WasteScreen(
         WasteCards(
             wasteCards = wastes,
             isWasteScreen = true,
-            modifier = modifier
+            modifier = modifier,
+            component = component
         )
     }
 }

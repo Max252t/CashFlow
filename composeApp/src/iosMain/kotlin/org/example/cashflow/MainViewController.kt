@@ -20,7 +20,6 @@ fun MainViewController() = ComposeUIViewController(
         wasteDatabase) }
 
     App(
-        root,
-        wasteDatabase.wasteDao()
+        root
         )
 }

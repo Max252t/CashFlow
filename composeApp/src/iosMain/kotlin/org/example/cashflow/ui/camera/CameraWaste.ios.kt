@@ -1,4 +1,4 @@
-package org.example.cashflow.ui
+package org.example.cashflow.ui.camera
 
 import androidx.compose.runtime.Composable
 

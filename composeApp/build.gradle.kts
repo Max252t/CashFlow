@@ -41,12 +41,14 @@ kotlin {
             implementation(libs.ktor.client.gson)
             implementation(libs.text.recognition)
 
-            implementation("androidx.camera:camera-core:1.6.0-alpha01")
-            implementation("androidx.camera:camera-camera2:1.6.0-alpha01")
-            implementation("androidx.camera:camera-lifecycle:1.6.0-alpha01")
-            implementation("androidx.camera:camera-view:1.6.0-alpha01")
-            implementation("androidx.camera:camera-mlkit-vision:1.6.0-alpha01")
-            implementation("androidx.camera:camera-extensions:1.6.0-alpha01")
+            implementation(libs.androidx.camera.core)
+            implementation(libs.androidx.camera.camera2)
+            implementation(libs.androidx.camera.lifecycle)
+            implementation(libs.androidx.camera.view)
+            implementation(libs.androidx.camera.mlkit.vision)
+            implementation(libs.androidx.camera.extensions)
+
+            implementation(libs.accompanist.permissions)
 
         }
         commonMain.dependencies {

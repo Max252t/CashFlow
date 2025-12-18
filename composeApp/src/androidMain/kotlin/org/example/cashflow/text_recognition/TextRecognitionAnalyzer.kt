@@ -1,6 +1,8 @@
 package org.example.cashflow.text_recognition
 
 import android.media.Image
+import androidx.annotation.OptIn
+import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.mlkit.vision.common.InputImage
@@ -26,6 +28,8 @@ class TextRecognitionAnalyzer(
     private val textRecognizer : TextRecognizer = TextRecognition.getClient(
         TextRecognizerOptions.DEFAULT_OPTIONS
     )
+
+    @OptIn(ExperimentalGetImage::class)
     override fun analyze(image: ImageProxy) {
         coroutineScope.launch {
             val mediaImage: Image = image.image ?: run{ image.close(); return@launch}

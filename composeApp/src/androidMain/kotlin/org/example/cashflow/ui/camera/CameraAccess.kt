@@ -1,16 +1,15 @@
-package org.example.cashflow.ui
+package org.example.cashflow.ui.camera
 
 import android.content.Context
 import android.view.ViewGroup
-import androidx.compose.material3.Text
 import android.widget.LinearLayout
-import androidx.camera.core.AspectRatio
-import androidx.camera.view.CameraController
+import android.widget.Toast
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,19 +20,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import org.example.cashflow.text_recognition.TextRecognitionAnalyzer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
-actual fun CameraWaste() {
+fun CameraAccess(){
     val context: Context = LocalContext.current
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val cameraController: LifecycleCameraController = remember { LifecycleCameraController(context) }
     var detectedText by remember { mutableStateOf("No text detected yet...") }
     fun onTextUpdated(updatedText: String){
-        detectedText = updatedText
+        CoroutineScope(Dispatchers.Main).launch {
+            detectedText = updatedText
+        }
     }
 
     AndroidView(
@@ -66,21 +68,5 @@ actual fun CameraWaste() {
             .padding(16.dp),
         text = detectedText,
     )
-}
-
-@Suppress("DEPRECATION")
-private fun startTextRecognition(
-    context: Context,
-    cameraController: LifecycleCameraController,
-    lifecycleOwner: LifecycleOwner,
-    previewView: PreviewView,
-    onDetectedTextUpdated: (String) -> Unit
-) {
-    cameraController.imageAnalysisTargetSize = CameraController.OutputSize(AspectRatio.RATIO_16_9)
-    cameraController.setImageAnalysisAnalyzer(
-        ContextCompat.getMainExecutor(context),
-        TextRecognitionAnalyzer(onDetectedTextUpdated = onDetectedTextUpdated)
-    )
-    cameraController.bindToLifecycle(lifecycleOwner)
-    previewView.controller = cameraController
+    Toast.makeText(context, detectedText, Toast.LENGTH_SHORT).show()
 }
