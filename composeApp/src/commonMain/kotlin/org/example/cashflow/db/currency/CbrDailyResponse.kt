@@ -2,6 +2,7 @@ package org.example.cashflow.db.currency
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.example.cashflow.db.NetworkData
 
 @Serializable
 data class CbrDailyResponse(
@@ -19,4 +20,6 @@ data class CbrDailyResponse(
 
     @SerialName("Valute")
     val valute: Map<String, CurrencyData> = emptyMap()
-)
+) : NetworkData()
+
+

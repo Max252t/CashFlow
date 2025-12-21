@@ -16,7 +16,8 @@ import org.example.cashflow.db.waste.WasteCard
 import org.example.cashflow.db.waste.WasteCategories
 import org.example.cashflow.db.waste.WasteDatabase
 import org.example.cashflow.db.waste.WasteItemDB
-import org.example.cashflow.network.CurrencyApi
+import org.example.cashflow.network.FactoryApi
+import org.example.cashflow.network.TypeApi
 import org.example.cashflow.viewmodels.interfaces.HomeComponent
 import org.example.cashflow.viewmodels.interfaces.WastesWork
 
@@ -92,8 +93,9 @@ class HomeScreenComponent(
 
     override fun updateCurrency() {
         CoroutineScope(Dispatchers.IO).launch {
-            val currencyApi = CurrencyApi("https://www.cbr-xml-daily.ru/daily_json.js")
-            _stateFlowCurrency.value = currencyApi.getData()
+            val currencyApi = FactoryApi("https://www.cbr-xml-daily.ru/daily_json.js")
+                .createCashFlowApi(TypeApi.CURRENCY)
+            _stateFlowCurrency.value = currencyApi.getData() as CbrDailyResponse
         }
     }
 
