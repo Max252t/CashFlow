@@ -49,6 +49,7 @@ kotlin {
             implementation(libs.androidx.camera.extensions)
 
             implementation(libs.accompanist.permissions)
+            implementation("com.google.mlkit:barcode-scanning:17.2.0")
 
         }
         commonMain.dependencies {
