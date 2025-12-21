@@ -9,6 +9,7 @@ import androidx.camera.view.PreviewView
 import androidx.compose.runtime.Composable
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import co.touchlab.kermit.Logger
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
@@ -22,7 +23,7 @@ actual fun CameraWaste() {
 
     if (cameraPermissionState.status.isGranted){
         CameraAccess { detectedQR ->
-
+            Logger.i(tag = "Check", messageString = detectedQR)
         }
     } else{
         NoPermissionContent(
