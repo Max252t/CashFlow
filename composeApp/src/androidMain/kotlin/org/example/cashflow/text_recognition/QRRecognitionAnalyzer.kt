@@ -5,11 +5,9 @@ import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import com.google.mlkit.vision.barcode.BarcodeScanner
+import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.Text
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizer
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,34 +16,33 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class TextRecognitionAnalyzer(
-    private val onDetectedTextUpdated: (String) -> Unit
+class QRRecognitionAnalyzer(
+    private val onDetectedQRUpdated: (String) -> Unit
 ): ImageAnalysis.Analyzer {
     companion object {
         const val THROTTLE_TIMEOUT_MS = 1_000L
     }
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private val textRecognizer : TextRecognizer = TextRecognition.getClient(
-        TextRecognizerOptions.DEFAULT_OPTIONS
-    )
+    private val qrCodeScanner: BarcodeScanner = BarcodeScanning.getClient()
 
     @OptIn(ExperimentalGetImage::class)
     override fun analyze(image: ImageProxy) {
         coroutineScope.launch {
             val mediaImage: Image = image.image ?: run{ image.close(); return@launch}
             val inputImage: InputImage = InputImage.fromMediaImage(mediaImage, image.imageInfo.rotationDegrees)
-            suspendCoroutine { continuation ->
-                textRecognizer.process(inputImage)
-                    .addOnSuccessListener { visionText: Text ->
-                        val detectedText: String = visionText.text
-                        if (detectedText.isNotBlank()) {
-                            onDetectedTextUpdated(detectedText)
-                        }
-                    }
-                    .addOnCompleteListener {
-                        continuation.resume(Unit)
-                    }
-            }
+
+           suspendCoroutine { continuation ->
+               qrCodeScanner.process(inputImage)
+                   .addOnSuccessListener { barcodes ->
+                       barcodes.firstOrNull()?.rawValue?.let { qrCode ->
+                           onDetectedQRUpdated(qrCode)
+                       }
+                   }
+                   .addOnCompleteListener {
+                       continuation.resume(Unit)
+                   }
+           }
+
             delay(THROTTLE_TIMEOUT_MS)
         }.invokeOnCompletion { exception ->
             exception?.printStackTrace()
