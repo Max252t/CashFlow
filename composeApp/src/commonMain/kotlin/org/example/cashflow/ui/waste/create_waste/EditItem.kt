@@ -38,11 +38,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview(showBackground = true)
 @Composable
-fun EditItem(onCreateItem: (
+fun EditItem(
+    onCreateItem: (
     cost: Float,
     currency: Currency,
     wasteCategories: WasteCategories
-) -> Unit) {
+) -> Unit,
+    wasteDefault: String = "") {
 
     val wasteCategories = WasteCategories.entries.toTypedArray()
     val currency = Currency.entries.toTypedArray()
@@ -52,7 +54,7 @@ fun EditItem(onCreateItem: (
     var selectWaste by remember { mutableStateOf(WasteCategories.Other) }
     var selectCurrency by remember { if (myLang == "ru") mutableStateOf(Currency.Ruble)
     else mutableStateOf(Currency.Dollar) }
-    var wasteInput by remember { mutableStateOf("") }
+    var wasteInput by remember { mutableStateOf(wasteDefault) }
     var isCurrencyCheck by remember { mutableStateOf(false) }
 
     onCreateItem(if (wasteInput!="")wasteInput.toFloat() else 0f,

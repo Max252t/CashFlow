@@ -60,7 +60,12 @@ fun CreateWaste(
                     }
                 },
                 byCamera = {
-                    CameraWaste()
+                    CameraWaste{wasteItemDB ->
+                        wasteCard.value = WasteCard(
+                            listWaste = listOf(wasteItemDB),
+                            date = dateFormat.format(date)
+                        )
+                    }
                 },
             )
         }

@@ -1,4 +1,4 @@
-package org.example.cashflow.text_recognition
+package org.example.cashflow.qr_recognition
 
 import android.media.Image
 import androidx.annotation.OptIn

@@ -39,7 +39,7 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
     )) }
     LazyColumn {
        itemsIndexed(wasteList){ index, _ ->
-           EditItem { cost, currency, wasteCategories ->
+           EditItem(onCreateItem =  { cost, currency, wasteCategories ->
                wasteList[index] = WasteItemDB(
                    wasteCategories,
                    cost,
@@ -47,7 +47,7 @@ fun OnEditWaste(returnList: (wasteList: List<WasteItemDB>)-> Unit){
                )
                returnList(wasteList)
                HomeScreenComponent.updateWasteCard(wasteList)
-           }
+           })
        }
         item {
             Box(

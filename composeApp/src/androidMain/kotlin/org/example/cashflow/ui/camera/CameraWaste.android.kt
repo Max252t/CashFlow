@@ -7,23 +7,43 @@ import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import co.touchlab.kermit.Logger
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import org.example.cashflow.text_recognition.QRRecognitionAnalyzer
+import org.example.cashflow.db.convertDB.ConverterCheck
+import org.example.cashflow.db.waste.WasteItemDB
+import org.example.cashflow.qr_recognition.QRRecognitionAnalyzer
+import org.example.cashflow.ui.waste.WasteItem
+import org.example.cashflow.ui.waste.create_waste.EditItem
+import org.example.cashflow.viewmodels.HomeScreenComponent
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-actual fun CameraWaste() {
+actual fun CameraWaste(
+    returnWaste: (WasteItemDB) -> Unit
+) {
+    var qrText by remember { mutableStateOf("No qr detected yet...") }
     val cameraPermissionState: PermissionState = rememberPermissionState(Manifest.permission.CAMERA)
 
     if (cameraPermissionState.status.isGranted){
-        CameraAccess { detectedQR ->
-            Logger.i(tag = "Check", messageString = detectedQR)
+        if (qrText == "No qr detected yet...") {
+            CameraAccess { detectedQR ->
+                qrText = detectedQR
+            }
+        } else{
+            val converter = ConverterCheck(qrText)
+            EditItem(wasteDefault = converter.getCost().toString(),
+                onCreateItem =  { cost, currency, wasteCategories ->
+                    val wasteItemDB = WasteItemDB(wasteCategories, cost, currency)
+                    returnWaste(wasteItemDB)
+                })
         }
     } else{
         NoPermissionContent(
