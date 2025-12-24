@@ -5,6 +5,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import kotlinx.serialization.Serializable
+import org.example.cashflow.db.currency.CbrDailyResponse
 
 import org.example.cashflow.db.waste.WasteDatabase
 import org.example.cashflow.navigation.RootComponent.Child.*
@@ -38,15 +39,19 @@ class RootComponent(
                 HomeScreen(
                     HomeScreenComponent(
                         context,
-                        wasteDatabase
+                        wasteDatabase,
+                        onNavigateToWaste = {currencyData ->
+                            navigation.replaceCurrent(Config.WasteScreen(currencyData))
+                        }
                     )
                 )
             }
 
-            Config.WasteScreen -> WasteScreen(
+           is Config.WasteScreen -> WasteScreen(
                 WasteScreenComponent(
                     context,
-                    wasteDatabase
+                    wasteDatabase,
+                    config.cbrDailyResponse
                 )
             )
         }
@@ -79,6 +84,6 @@ class RootComponent(
         @Serializable
         data object AccountScreen: Config()
         @Serializable
-        data object WasteScreen: Config()
+        data class WasteScreen(val cbrDailyResponse: CbrDailyResponse): Config()
     }
 }

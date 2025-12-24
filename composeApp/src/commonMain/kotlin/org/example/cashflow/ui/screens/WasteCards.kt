@@ -37,7 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun WasteCards(
     wasteCards: List<Waste>,
-    toWaste: (config: RootComponent.Config) -> Unit = {},
+    toWaste: () -> Unit = {},
     isWasteScreen: Boolean = false,
     modifier: Modifier = Modifier,
     component: WastesWork
@@ -63,7 +63,6 @@ fun WasteCards(
                 containerColor = ColorsUI.cardColor
             )
         ) {
-
             LazyColumn(modifier = if (!isWasteScreen) Modifier.fillMaxHeight(0.5f) else modifier) {
                 item {
                     Row {
@@ -79,7 +78,7 @@ fun WasteCards(
                                 modifier = Modifier.weight(1f)
                             ) {
                                 IconButton(onClick = {
-                                    toWaste(RootComponent.Config.WasteScreen)
+                                    toWaste()
                                 }) {
                                     Icon(
                                         Icons.AutoMirrored.Filled.ArrowForward,

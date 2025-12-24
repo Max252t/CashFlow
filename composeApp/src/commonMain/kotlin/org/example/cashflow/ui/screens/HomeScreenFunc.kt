@@ -75,7 +75,7 @@ fun HomeScreen(
             }
             WasteCards(
                 wasteCards = wastes.value,
-                toWaste = rootComponent::navigateTo,
+                toWaste = component::navigateToWaste,
                 component = component
                 )
         }

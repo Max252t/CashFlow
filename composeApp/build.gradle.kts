@@ -49,7 +49,8 @@ kotlin {
             implementation(libs.androidx.camera.extensions)
 
             implementation(libs.accompanist.permissions)
-            implementation("com.google.mlkit:barcode-scanning:17.2.0")
+            //noinspection Aligned16KB
+            implementation(libs.barcode.scanning)
 
         }
         commonMain.dependencies {
@@ -85,7 +86,19 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(kotlin("test-common"))
+            implementation(kotlin("test-annotations-common"))
+            implementation(libs.mockk.common)
+            implementation(libs.kotest.assertions.core)
+            implementation(libs.ktor.client.mock)
         }
+        androidUnitTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.junit)
+            implementation(libs.mockk)
+            implementation(libs.kotest.runner.junit5)
+        }
+
     }
 }
 

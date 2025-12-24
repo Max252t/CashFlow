@@ -23,7 +23,8 @@ import org.example.cashflow.viewmodels.interfaces.WastesWork
 
 class HomeScreenComponent(
     componentContext: ComponentContext,
-    val wasteDatabase: WasteDatabase
+    val wasteDatabase: WasteDatabase,
+    private val onNavigateToWaste: (currencyData: CbrDailyResponse) -> Unit
 ): ComponentContext by componentContext, HomeComponent, WastesWork {
     init {
         getWastes()
@@ -97,6 +98,10 @@ class HomeScreenComponent(
                 .createCashFlowApi(TypeApi.CURRENCY)
             _stateFlowCurrency.value = currencyApi.getData() as CbrDailyResponse
         }
+    }
+
+    override fun navigateToWaste() {
+        onNavigateToWaste(_stateFlowCurrency.value)
     }
 
     fun sumWastes(wasteList: List<WasteCard>, valute: Map<String, CurrencyData>,

@@ -15,7 +15,8 @@ fun WasteScreen(
     modifier: Modifier = Modifier.fillMaxWidth()
 ){
     val wastes by component.wasteState.collectAsState(initial = emptyList())
-    val mapWaste = wastes.associateBy { it.listWasteCategories }.mapValues { (_, value) -> value.cost.toDouble().toInt() }
+    val mapWaste = component.toRubles()
+
     Column(modifier) {
         DonutChart(
             mapWaste,
