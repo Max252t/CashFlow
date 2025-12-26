@@ -38,5 +38,9 @@ class CurrencyApi: CashFlowApi {
         return data
     }
 
+    override fun postData(path: String): NetworkData {
+        return CbrDailyResponse()
+    }
+
 }
 expect fun createUnsafeHttpClient(): HttpClient

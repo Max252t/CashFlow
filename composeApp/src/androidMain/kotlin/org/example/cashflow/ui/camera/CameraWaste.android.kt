@@ -19,10 +19,10 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import org.example.cashflow.db.convertDB.ConverterCheck
 import org.example.cashflow.db.waste.WasteItemDB
+import org.example.cashflow.network.FactoryApi
+import org.example.cashflow.network.TypeApi
 import org.example.cashflow.qr_recognition.QRRecognitionAnalyzer
-import org.example.cashflow.ui.waste.WasteItem
 import org.example.cashflow.ui.waste.create_waste.EditItem
-import org.example.cashflow.viewmodels.HomeScreenComponent
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -38,6 +38,8 @@ actual fun CameraWaste(
                 qrText = detectedQR
             }
         } else{
+            val checkApi = FactoryApi("https://proverkacheka.com").createCashFlowApi(TypeApi.CHECK)
+            val result = checkApi.postData(qrText)
             val converter = ConverterCheck(qrText)
             EditItem(wasteDefault = converter.getCost().toString(),
                 onCreateItem =  { cost, currency, wasteCategories ->

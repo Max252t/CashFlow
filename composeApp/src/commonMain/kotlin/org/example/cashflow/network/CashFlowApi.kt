@@ -4,4 +4,5 @@ import org.example.cashflow.db.NetworkData
 
 interface CashFlowApi {
     fun getData(): NetworkData
+    fun postData(path: String): NetworkData
 }
